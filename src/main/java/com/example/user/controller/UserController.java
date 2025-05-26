@@ -3,12 +3,12 @@ package com.example.user.controller;
 import com.example.user.model.CreateUserRequest;
 import com.example.user.model.UserResponse;
 import com.example.user.service.UserService;
-import com.example.user.Entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -22,13 +22,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request));
 
     }
-
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<UserResponse>> getUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }

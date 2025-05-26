@@ -1,6 +1,5 @@
 package com.example.user.service;
 
-import com.example.user.Entity.User;
 import com.example.user.model.CreateUserRequest;
 import com.example.user.model.UserResponse;
 
@@ -13,7 +12,6 @@ public interface UserService {
     List<UserResponse> getAllUsers();
 
     UserResponse getUserById(int id);
-
     Void deleteUserById(int id);
 }
 

@@ -3,14 +3,13 @@ package com.example.user.service.impl;
 import com.example.user.model.CreateUserRequest;
 import com.example.user.model.UserResponse;
 import com.example.user.service.UserService;
-import com.example.user.Entity.User;
+import com.example.user.entity.User;
 import com.example.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,7 +39,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll()
                 .stream()
                 .map(this::mapToUserResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

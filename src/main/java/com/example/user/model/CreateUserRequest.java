@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class CreateUserRequest {
     private int id;
 
-    @NotNull(message = "Name cannot be null")
+    @NotEmpty(message = "Name cannot be null")
     private String name;
 
     @NotEmpty(message = "Email cannot be empty")

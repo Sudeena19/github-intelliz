@@ -8,12 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/api/v1/users")
 public class UserController {
     private static final Logger LOGGER = LogManager.getLogger(UserController.class);
@@ -23,9 +25,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @Valid
     @PostMapping()
-    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request));
 
     }

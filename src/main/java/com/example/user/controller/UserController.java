@@ -3,6 +3,7 @@ package com.example.user.controller;
 import com.example.user.model.CreateUserRequest;
 import com.example.user.model.UserResponse;
 import com.example.user.service.UserService;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Valid
     @PostMapping()
     public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request));

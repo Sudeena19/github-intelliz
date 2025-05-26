@@ -1,10 +1,11 @@
 package com.example.user.controller;
 
-import com.example.user.Service.UserService;
-import com.example.user.model.User;
+import com.example.user.model.CreateUserRequest;
+import com.example.user.model.UserResponse;
+import com.example.user.service.UserService;
+import com.example.user.Entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,47 +13,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
-    private static final Logger LOGGER= LogManager.getLogger(UserController.class);
+    private static final Logger LOGGER = LogManager.getLogger(UserController.class);
     private final UserService userService;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping (value="/add", method = RequestMethod.POST)
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        userService.createUser(user);
-        return new ResponseEntity<>("User created", HttpStatus.CREATED);
+    @PostMapping("/add")
+    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request));
 
     }
-    @RequestMapping(value="/all", method=RequestMethod.GET)
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users= userService.getAllUsers();
-        return new ResponseEntity<>(users,HttpStatus.OK);
+
+    @GetMapping("/all")
+    public ResponseEntity<List<UserResponse>> getUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ResponseEntity<User> getUser(@PathVariable int id) {
-        User user=userService.getUserById(id);
-        if(user==null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else{
-            return new ResponseEntity<>(user,HttpStatus.OK);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUser(@PathVariable int id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
-    public ResponseEntity<String> deleteUser(@PathVariable int id) {
-        User user=userService.getUserById(id);
-        if(user!=null) {
-            userService.deleteUserById(id);
-            return new ResponseEntity<>("User deleted", HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>("User Not Found",HttpStatus.NOT_FOUND);
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable int id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
 
     }
 }

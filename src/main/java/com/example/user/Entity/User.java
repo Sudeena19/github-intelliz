@@ -1,9 +1,9 @@
-package com.example.user.model;
+package com.example.user.Entity;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

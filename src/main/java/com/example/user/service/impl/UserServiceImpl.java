@@ -1,11 +1,11 @@
 package com.example.user.service.impl;
 
+import com.example.user.exception.UserNotFoundException;
 import com.example.user.model.CreateUserRequest;
 import com.example.user.model.UserResponse;
 import com.example.user.service.UserService;
 import com.example.user.entity.User;
 import com.example.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,14 +44,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse getUserById(int id) {
         Optional<User> user = userRepository.findById(id);
-        return user.map(this::mapToUserResponse).orElse(null);
+        if(user.isPresent()) {
+            return mapToUserResponse(user.get());
+        }
+        else{
+            throw new UserNotFoundException("User not found");
+        }
     }
 
     @Override
     public Void deleteUserById(int id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
             userRepository.deleteById(id);
+        }
+        else{
+            throw new UserNotFoundException("User not found");
         }
         return null;
     }

@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(
                         HttpStatus.BAD_REQUEST.value(),
-                        HttpStatus.BAD_GATEWAY.getReasonPhrase(),
+                        HttpStatus.BAD_REQUEST.getReasonPhrase(),
                         message
                 ));
     }

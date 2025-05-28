@@ -16,4 +16,12 @@ public class User {
     private int id;
     private String name;
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status{
+        INACTIVE,
+        ACTIVE,
+    }
 }

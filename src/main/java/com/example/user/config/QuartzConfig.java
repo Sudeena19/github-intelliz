@@ -21,9 +21,7 @@ public class QuartzConfig {
         return TriggerBuilder.newTrigger()
                 .forJob(userActivationJobDetail())
                 .withIdentity("userActivationTrigger")
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                        .withIntervalInMinutes(5)
-                        .repeatForever())
+                .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
                 .startNow()
                 .build();
     }

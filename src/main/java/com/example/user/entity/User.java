@@ -19,9 +19,4 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
-    public enum Status{
-        INACTIVE,
-        ACTIVE,
-    }
 }

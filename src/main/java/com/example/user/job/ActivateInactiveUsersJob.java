@@ -1,5 +1,6 @@
 package com.example.user.job;
 
+import com.example.user.entity.Status;
 import com.example.user.entity.User;
 import com.example.user.repository.UserRepository;
 import org.quartz.Job;
@@ -20,13 +21,13 @@ public class ActivateInactiveUsersJob implements Job {
     @Override
     public void execute(JobExecutionContext context) {
 
-        List<User> inactiveUsers = userRepository.findByStatus(User.Status.INACTIVE);
+        List<User> inactiveUsers = userRepository.findByStatus(Status.INACTIVE);
         for (User user : inactiveUsers) {
-            user.setStatus(User.Status.ACTIVE);
+            user.setStatus(Status.ACTIVE);
         }
         userRepository.saveAll(inactiveUsers);
 
-        List<User> activeUsers = userRepository.findByStatus(User.Status.ACTIVE);
+        List<User> activeUsers = userRepository.findByStatus(Status.ACTIVE);
 
         System.out.println("✅ Updated " + activeUsers.size() + " users to ACTIVE at " +
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
